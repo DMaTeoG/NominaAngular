@@ -13,14 +13,40 @@ import { Empleado } from '../../../core/models/empleado.model';
         <label>Nombre:</label>
         <input type="text" [(ngModel)]="empleado.nombre" name="nombre" required>
       </div>
+
       <div class="form-group">
         <label>Cargo:</label>
         <input type="text" [(ngModel)]="empleado.cargo" name="cargo" required>
       </div>
+
       <div class="form-group">
         <label>Salario Base:</label>
         <input type="number" [(ngModel)]="empleado.salarioBase" name="salarioBase" required>
       </div>
+
+      <div class="form-group">
+        <label>Bonificación:</label>
+        <input type="number" [(ngModel)]="empleado.bonificacion" name="bonificacion">
+      </div>
+
+      <div class="form-group">
+        <label>Horas Extras:</label>
+        <input type="number" [(ngModel)]="empleado.horasExtras.horas" name="horasExtrasHoras" placeholder="Cantidad de horas">
+        <input type="number" [(ngModel)]="empleado.horasExtras.tarifa" name="horasExtrasTarifa" placeholder="Tarifa por hora">
+      </div>
+
+      <div class="form-group">
+        <label><input type="checkbox" [(ngModel)]="empleado.aplicaImpuestos" name="aplicaImpuestos"> Aplica Impuestos</label>
+      </div>
+
+      <div class="form-group">
+        <label><input type="checkbox" [(ngModel)]="empleado.aplicaPension" name="aplicaPension"> Aplica Pensión</label>
+      </div>
+
+      <div class="form-group">
+        <label><input type="checkbox" [(ngModel)]="empleado.aplicaSalud" name="aplicaSalud"> Aplica Salud</label>
+      </div>
+
       <button type="submit" [disabled]="!empleadoForm.valid">Agregar Empleado</button>
     </form>
   `,
@@ -30,13 +56,20 @@ import { Empleado } from '../../../core/models/empleado.model';
       padding: 20px;
       border-radius: 4px;
       margin-top: 20px;
+      max-width: 500px;
+      background-color: #f9f9f9;
     }
     .form-group {
       margin-bottom: 15px;
     }
-    input {
+    input[type="text"],
+    input[type="number"] {
       width: 100%;
       padding: 8px;
+      margin-top: 4px;
+    }
+    input[type="checkbox"] {
+      margin-right: 8px;
     }
     button {
       padding: 10px 15px;
@@ -44,6 +77,7 @@ import { Empleado } from '../../../core/models/empleado.model';
       color: white;
       border: none;
       border-radius: 4px;
+      width: 100%;
     }
   `]
 })
@@ -68,6 +102,21 @@ export class EmpleadoFormComponent {
     if (form.valid) {
       this.empleadoAgregado.emit({ ...this.empleado });
       form.resetForm();
+
+      // Reset manual para propiedades booleanas
+      this.empleado = {
+        nombre: '',
+        cargo: '',
+        salarioBase: 0,
+        aplicaImpuestos: true,
+        aplicaPension: true,
+        aplicaSalud: true,
+        bonificacion: 0,
+        horasExtras: {
+          horas: 0,
+          tarifa: 0
+        }
+      };
     }
   }
 }

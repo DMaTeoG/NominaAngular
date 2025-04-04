@@ -5,6 +5,7 @@ import { EmpleadoFormComponent } from './modules/empleados/empleado-form/emplead
 import { NominaService } from './core/services/nomina.service';
 
 @Component({
+  
   standalone: true,
   selector: 'app-root',
   imports: [
